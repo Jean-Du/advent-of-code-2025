@@ -8,19 +8,17 @@ with open(filename, "r") as f:
         for line in f.readlines()
     ]
 
-
 distances = []
 for i, junction_a in enumerate(junctions[:-1]):
     for j, junction_b in enumerate(junctions[i + 1 :]):
         distance = math.dist(junction_a, junction_b)
         distances.append(((i, j + i + 1), distance))
 
-number_of_shortest_distances_required = 1000
-distances = sorted(distances, key=lambda item: item[1])[
-    :number_of_shortest_distances_required
-]
+distances = sorted(distances, key=lambda item: item[1])
 
 circuits = []
+target_circuits = [set(range(len(junctions)))]
+
 for connected_pair, _ in distances:
     connected = False
     connected_pair_set = set(connected_pair)
@@ -36,6 +34,6 @@ for connected_pair, _ in distances:
             break
     if not connected:
         circuits.append(connected_pair_set)
-
-circuit_lengths = sorted([len(circuit) for circuit in circuits], reverse=True)
-print(math.prod(circuit_lengths[0:3]))
+    if circuits == target_circuits:
+        print(junctions[connected_pair[0]][0] * junctions[connected_pair[1]][0])
+        break
