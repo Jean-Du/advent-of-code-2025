@@ -15,7 +15,7 @@ def check_target_reached(target, buttons, step):
 
 symbol_to_value = {"#": 1, ".": 0}
 fewest_steps = []
-for line_index, line in enumerate(lines):
+for line in lines:
     target_configuration = [symbol_to_value[item] for item in list(line[0][1:-1])]
     buttons = [
         tuple(int(index) for index in item[1:-1].split(",")) for item in line[1:-1]
